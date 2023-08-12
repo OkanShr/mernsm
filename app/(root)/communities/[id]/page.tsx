@@ -27,7 +27,6 @@ async function Page({ params }: { params: { id: string } }) {
         bio={communityDetails.bio}
         type='Community'
       />
-
       <div className='mt-9'>
         <Tabs defaultValue='threads' className='w-full'>
           <TabsList className='tab'>
@@ -58,11 +57,13 @@ async function Page({ params }: { params: { id: string } }) {
               accountId={communityDetails._id}
               accountType='Community'
             />
+            
           </TabsContent>
 
           <TabsContent value='members' className='mt-9 w-full text-light-1'>
             <section className='mt-9 flex flex-col gap-10'>
               {communityDetails.members.map((member: any) => (
+                
                 <UserCard
                   key={member.id}
                   id={member.id}

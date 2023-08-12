@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const threadSchema = new mongoose.Schema({
+  image: String,
   text: {
     type: String,
     required: true,

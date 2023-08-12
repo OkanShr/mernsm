@@ -3,6 +3,8 @@ const nextConfig = {
     experimental: {
       serverActions: true,
       serverComponentsExternalPackages: ["mongoose"],
+      serverActionsBodySizeLimit: '5mb',
+
     },
     eslint: {
       // Warning: This allows production builds to successfully complete even if

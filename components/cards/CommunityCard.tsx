@@ -12,10 +12,15 @@ interface Props {
   members: {
     image: string;
   }[];
+  user: string;
 }
 
-function CommunityCard({ id, name, username, imgUrl, bio, members }: Props) {
+
+function CommunityCard({ id, name, username, imgUrl, bio, members, user }: Props) {
+
+  
   return (
+
     <article className='community-card'>
       <div className='flex flex-wrap items-center gap-3'>
         <Link href={`/communities/${id}`} className='relative h-12 w-12'>

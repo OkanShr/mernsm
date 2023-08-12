@@ -70,6 +70,7 @@ export async function fetchCommunityDetails(id: string) {
   }
 }
 
+
 export async function fetchCommunityPosts(id: string) {
   try {
     connectToDB();
@@ -299,6 +300,33 @@ export async function deleteCommunity(communityId: string) {
     return deletedCommunity;
   } catch (error) {
     console.error("Error deleting community: ", error);
+    throw error;
+  }
+}
+
+export async function fetchCommunityMembers(communityId: string) {
+  try {
+    connectToDB();
+
+    const communityDetails = await Community.find({ communityId });
+
+    const memberIds= communityDetails.reduce((acc, communityDetails)=>{
+      return acc.concat(communityDetails.members);
+    },[]);
+
+    const memberInfo:string[] = await Community.find({
+      _id: {$in: memberIds},
+      member: {$ne: communityId},
+    }).populate({
+      path: "members",
+      model: User,
+      select: "name _id id",
+    });
+
+    return memberInfo;
+  } catch (error) {
+    // Handle any errors
+    console.error("Error fetching member info:", error);
     throw error;
   }
 }

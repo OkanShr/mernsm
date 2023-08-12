@@ -9,6 +9,7 @@ interface Props {
   currentUserId: string;
   parentId: string | null;
   content: string;
+  threadImage: string;
   author: {
     name: string;
     image: string;
@@ -33,6 +34,7 @@ function ThreadCard({
   currentUserId,
   parentId,
   content,
+  threadImage,
   author,
   community,
   createdAt,
@@ -60,24 +62,32 @@ function ThreadCard({
             <div className='thread-card_bar' />
           </div>
 
-          <div className='flex w-full flex-col'>
+          <div className='flex w-full flex-col gap-4'>
             <Link href={`/profile/${author.id}`} className='w-fit'>
               <h4 className='cursor-pointer text-base-semibold text-light-1'>
                 {author.name}
               </h4>
             </Link>
-
+            {threadImage === "" || threadImage === null? (
+              ''
+            ):<Image
+            src={threadImage}
+            alt='thread_image'
+            width={500}
+            height={500}
+          />}
+            
             <p className='mt-2 text-small-regular text-light-2'>{content}</p>
 
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
               <div className='flex gap-3.5'>
-                <Image
+                {/* <Image
                   src='/assets/heart-gray.svg'
                   alt='heart'
                   width={24}
                   height={24}
                   className='cursor-pointer object-contain'
-                />
+                /> */}
                 <Link href={`/thread/${id}`}>
                   <Image
                     src='/assets/reply.svg'
@@ -87,7 +97,7 @@ function ThreadCard({
                     className='cursor-pointer object-contain'
                   />
                 </Link>
-                <Image
+                {/* <Image
                   src='/assets/repost.svg'
                   alt='heart'
                   width={24}
@@ -100,7 +110,7 @@ function ThreadCard({
                   width={24}
                   height={24}
                   className='cursor-pointer object-contain'
-                />
+                /> */}
               </div>
 
               {isComment && comments.length > 0 && (

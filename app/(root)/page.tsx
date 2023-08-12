@@ -32,7 +32,23 @@ async function Home({
         ) : (
           <>
             {result.posts.map((post) => (
-              <ThreadCard
+              // This part will show organization posts in Home Page
+              // <ThreadCard
+              //   key={post._id}
+              //   id={post._id}
+              //   currentUserId={user.id}
+              //   parentId={post.parentId}
+              //   content={post.text}
+              //   author={post.author}
+              //   community={post.community}
+              //   createdAt={post.createdAt}
+              //   comments={post.children}
+              // />
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+              // This part wont show organization posts in Home Page
+              post.community === null ? (
+                <ThreadCard
+                threadImage={post.image}
                 key={post._id}
                 id={post._id}
                 currentUserId={user.id}
@@ -43,6 +59,8 @@ async function Home({
                 createdAt={post.createdAt}
                 comments={post.children}
               />
+              ): ("")
+              
             ))}
           </>
         )}

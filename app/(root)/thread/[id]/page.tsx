@@ -6,6 +6,7 @@ import { currentUser } from "@clerk/nextjs";
 
 import { fetchUser } from "@/lib/actions/user.actions";
 import { fetchThreadById } from "@/lib/actions/thread.actions";
+import { fetchCommunityDetails } from "@/lib/actions/community.actions";
 
 export const revalidate = 0;
 
@@ -20,8 +21,12 @@ async function page({ params }: { params: { id: string } }) {
 
   const thread = await fetchThreadById(params.id);
 
+  
+
   return (
+    
     <section className='relative'>
+      
       <div>
         <ThreadCard
           id={thread._id}
