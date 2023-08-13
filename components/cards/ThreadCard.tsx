@@ -68,14 +68,7 @@ function ThreadCard({
                 {author.name}
               </h4>
             </Link>
-            {threadImage === "" || threadImage === null? (
-              ''
-            ):<Image
-            src={threadImage}
-            alt='thread_image'
-            width={500}
-            height={500}
-          />}
+            
             
             <p className='mt-2 text-small-regular text-light-2'>{content}</p>
 

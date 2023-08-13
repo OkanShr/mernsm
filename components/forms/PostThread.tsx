@@ -62,14 +62,16 @@ function PostThread({ userId }: Props) {
         values.threadImage = imgRes[0].fileUrl;
       }
     }
-
-    await createThread({
-      image: values.threadImage,
+    
+      await createThread({
+      image: values.threadImage !== "" ? values.threadImage : "",
       text: values.thread,
       author: userId,
       communityId: organization ? organization.id : null,
       path: pathname,
     });
+    
+    
 
     router.push("/");
   };
@@ -129,7 +131,7 @@ function PostThread({ userId }: Props) {
                 )}
               </FormLabel>
               <FormControl className='flex-1 text-base-semibold text-gray-200'>
-                <Input
+                <Input required={false}
                   type='file'
                   accept='image/*'
                   placeholder='Add thread picture'
