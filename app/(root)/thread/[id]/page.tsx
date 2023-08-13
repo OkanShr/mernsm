@@ -29,6 +29,7 @@ async function page({ params }: { params: { id: string } }) {
       
       <div>
         <ThreadCard
+          threadImage={thread.image}
           id={thread._id}
           currentUserId={user.id}
           parentId={thread.parentId}
@@ -60,8 +61,7 @@ async function page({ params }: { params: { id: string } }) {
             community={childItem.community}
             createdAt={childItem.createdAt}
             comments={childItem.children}
-            isComment
-          />
+            isComment threadImage={childItem.image}          />
         ))}
       </div>
     </section>
