@@ -70,8 +70,15 @@ function ThreadCard({
             </Link>
             
             
-            <p className='mt-2 text-small-regular text-light-2'>{content}</p>
-
+            <p className='mt-2 text-base-medium text-light-2'>{content}</p>
+            {threadImage === "" || threadImage === null? (
+              ''
+            ):<Image
+            src={threadImage}
+            alt='thread_image'
+            width={500}
+            height={500}
+          />}
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
               <div className='flex gap-3.5'>
                 {/* <Image
