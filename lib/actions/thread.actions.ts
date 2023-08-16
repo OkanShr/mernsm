@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { FilterQuery, SortOrder } from "mongoose";
 
 import { connectToDB } from "../mongoose";
 
@@ -201,12 +202,76 @@ export async function fetchThreadById(threadId: string) {
     throw new Error("Unable to fetch thread");
   }
 }
+export async function fetchThreads({
+  userId,
+  searchString = "",
+  pageNumber = 1,
+  pageSize = 20,
+  sortBy = "desc",
+}: {
+  userId: string;
+  searchString?: string;
+  pageNumber?: number;
+  pageSize?: number;
+  sortBy?: SortOrder;
+}) {
+  try {
+    connectToDB();
 
-export async function addCommentToThread(
+    // Calculate the number of users to skip based on the page number and page size.
+    const skipAmount = (pageNumber - 1) * pageSize;
+
+    // Create a case-insensitive regular expression for the provided search string.
+    const regex = new RegExp(searchString, "i");
+
+    // Create an initial query object to filter users.
+    const query: FilterQuery<typeof Thread> = {
+      community: { $ne: null }, // Exclude the current user from the results.
+    };
+
+    // If the search string is not empty, add the $or operator to match either username or name fields.
+    if (searchString.trim() !== "") {
+      query.$or = [
+        { text: { $regex: regex } },
+      ];
+    }
+
+    // Define the sort options for the fetched users based on createdAt field and provided sort order.
+    const sortOptions = { createdAt: sortBy };
+
+    const usersQuery = User.find(query)
+      .sort(sortOptions)
+      .skip(skipAmount)
+      .limit(pageSize);
+
+    // Count the total number of users that match the search criteria (without pagination).
+    const totalPostCount = await Thread.countDocuments(query);
+
+    const posts = await usersQuery.exec();
+
+    // Check if there are more users beyond the current page.
+    const isNext = totalPostCount > skipAmount + posts.length;
+
+    return { posts, isNext };
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    throw error;
+  }
+}
+
+interface CommParam{
   threadId: string,
-  commentText: string,
+  text: string,
+  image: string | null,
   userId: string,
   path: string
+}
+export async function addCommentToThread(
+  {threadId,
+  text,
+  image,
+  userId,
+  path}: CommParam
 ) {
   connectToDB();
 
@@ -220,7 +285,8 @@ export async function addCommentToThread(
 
     // Create the new comment thread
     const commentThread = new Thread({
-      text: commentText,
+      image: image,
+      text: text,
       author: userId,
       parentId: threadId, // Set the parentId to the original thread's ID
     });

@@ -25,7 +25,7 @@ async function page({ params }: { params: { id: string } }) {
 
   return (
     
-    <section className='relative'>
+    <section className='relative bg-dark-3 rounded-md'>
       
       <div>
         <ThreadCard
@@ -61,7 +61,8 @@ async function page({ params }: { params: { id: string } }) {
             community={childItem.community}
             createdAt={childItem.createdAt}
             comments={childItem.children}
-            isComment threadImage={childItem.image}          />
+            isComment threadImage={childItem.image}
+            />
         ))}
       </div>
     </section>

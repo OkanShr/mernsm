@@ -27,6 +27,7 @@ import { createThread } from "@/lib/actions/thread.actions";
 import { useUploadThing } from "@/lib/uploadthing";
 import { isBase64Image } from "@/lib/utils";
 import {ChangeEvent, useState } from "react";
+import { Label } from "@radix-ui/react-label";
 
 interface Props {
   userId: string;
@@ -65,7 +66,7 @@ function PostThread({ userId }: Props) {
     
       await createThread({
       image: values.threadImage !== "" ? values.threadImage : "",
-      text: values.thread,
+      text: values.thread.toUpperCase(),
       author: userId,
       communityId: organization ? organization.id : null,
       path: pathname,
@@ -110,7 +111,7 @@ function PostThread({ userId }: Props) {
           name='threadImage'
           render={({ field }) => (
             <FormItem className='flex flex-col items-center gap-4'>
-              <FormLabel className='account-form_image-label'>
+              <FormLabel >
                 {field.value ? (
                   <Image
                     src={field.value}
@@ -160,7 +161,7 @@ function PostThread({ userId }: Props) {
         />
         
 
-        <Button type='submit' className='bg-primary-500'>
+        <Button type='submit' className='bg-secondary-500'>
           Post Thread
         </Button>
       </form>

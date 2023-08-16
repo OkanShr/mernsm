@@ -43,7 +43,7 @@ function ThreadCard({
 }: Props) {
   return (
     <article
-      className={`flex w-full flex-col rounded-xl ${
+      className={`flex w-full flex-col rounded-xl bg-dark-3 ${
         isComment ? "px-0 xs:px-7" : "bg-dark-2 p-7"
       }`}
     >
@@ -91,9 +91,9 @@ function ThreadCard({
                 <Link href={`/thread/${id}`}>
                   <Image
                     src='/assets/reply.svg'
-                    alt='heart'
-                    width={24}
-                    height={24}
+                    alt='commenticon'
+                    width={32}
+                    height={32}
                     className='cursor-pointer object-contain'
                   />
                 </Link>
@@ -133,7 +133,7 @@ function ThreadCard({
         />
       </div>
 
-      {!isComment && comments.length > 0 && (
+      {!isComment && comments?.length > 0 && (
         <div className='ml-1 mt-3 flex items-center gap-2'>
           {comments.slice(0, 2).map((comment, index) => (
             <Image
