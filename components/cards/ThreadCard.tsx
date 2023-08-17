@@ -97,7 +97,7 @@ function ThreadCard({
                     height={32}
                     className="cursor-pointer object-contain"
                   />
-                  <p className="text-light-1">{`${formatDateString(
+                  <p className="text-gray-1">{`${formatDateString(
                     createdAt
                   )}`}</p>
                 </Link>

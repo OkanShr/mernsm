@@ -203,13 +203,13 @@ export async function fetchThreadById(threadId: string) {
   }
 }
 export async function fetchThreads({
-  userId,
+  showCommunity = false,
   searchString = "",
   pageNumber = 1,
   pageSize = 20,
   sortBy = "desc",
 }: {
-  userId: string;
+  showCommunity?: boolean;
   searchString?: string;
   pageNumber?: number;
   pageSize?: number;
@@ -226,23 +226,39 @@ export async function fetchThreads({
 
     // Create an initial query object to filter users.
     const query: FilterQuery<typeof Thread> = {
-      community: { $ne: null }, // Exclude the current user from the results.
+      // community: { $ne: null }, // Exclude community posts from the results.
     };
 
     // If the search string is not empty, add the $or operator to match either username or name fields.
     if (searchString.trim() !== "") {
       query.$or = [
-        { text: { $regex: regex } },
+        { text: { $regex: regex }},
       ];
     }
 
     // Define the sort options for the fetched users based on createdAt field and provided sort order.
     const sortOptions = { createdAt: sortBy };
 
-    const usersQuery = User.find(query)
-      .sort(sortOptions)
-      .skip(skipAmount)
-      .limit(pageSize);
+    const usersQuery = Thread.find(query)
+    .sort(sortOptions)
+    .skip(skipAmount)
+    .limit(pageSize)
+    .populate({
+      path: "author",
+      model: User,
+    })
+    .populate({
+      path: "community",
+      model: Community,
+    })
+    .populate({
+      path: "children", // Populate the children field
+      populate: {
+        path: "author", // Populate the author field within children
+        model: User,
+        select: "_id name parentId image", // Select only _id and username fields of the author
+      },
+    });
 
     // Count the total number of users that match the search criteria (without pagination).
     const totalPostCount = await Thread.countDocuments(query);
