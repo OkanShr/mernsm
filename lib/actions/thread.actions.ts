@@ -50,15 +50,20 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
 }
 
 interface Params {
-  image: string,
-  text: string,
-  author: string,
-  communityId: string | null,
-  path: string,
+  image: string;
+  text: string;
+  author: string;
+  communityId: string | null;
+  path: string;
 }
 
-export async function createThread({image, text, author, communityId, path }: Params
-) {
+export async function createThread({
+  image,
+  text,
+  author,
+  communityId,
+  path,
+}: Params) {
   try {
     connectToDB();
 
@@ -231,34 +236,32 @@ export async function fetchThreads({
 
     // If the search string is not empty, add the $or operator to match either username or name fields.
     if (searchString.trim() !== "") {
-      query.$or = [
-        { text: { $regex: regex }},
-      ];
+      query.$or = [{ text: { $regex: regex } }];
     }
 
     // Define the sort options for the fetched users based on createdAt field and provided sort order.
     const sortOptions = { createdAt: sortBy };
 
     const usersQuery = Thread.find(query)
-    .sort(sortOptions)
-    .skip(skipAmount)
-    .limit(pageSize)
-    .populate({
-      path: "author",
-      model: User,
-    })
-    .populate({
-      path: "community",
-      model: Community,
-    })
-    .populate({
-      path: "children", // Populate the children field
-      populate: {
-        path: "author", // Populate the author field within children
+      .sort(sortOptions)
+      .skip(skipAmount)
+      .limit(pageSize)
+      .populate({
+        path: "author",
         model: User,
-        select: "_id name parentId image", // Select only _id and username fields of the author
-      },
-    });
+      })
+      .populate({
+        path: "community",
+        model: Community,
+      })
+      .populate({
+        path: "children", // Populate the children field
+        populate: {
+          path: "author", // Populate the author field within children
+          model: User,
+          select: "_id name parentId image", // Select only _id and username fields of the author
+        },
+      });
 
     // Count the total number of users that match the search criteria (without pagination).
     const totalPostCount = await Thread.countDocuments(query);
@@ -275,25 +278,33 @@ export async function fetchThreads({
   }
 }
 
-interface CommParam{
-  threadId: string,
-  text: string,
-  image: string | null,
-  userId: string,
-  path: string
+interface CommParam {
+  threadId: string;
+  text: string;
+  image: string | null;
+  userId: string;
+  communityId: string | null;
+  path: string;
+  
 }
-export async function addCommentToThread(
-  {threadId,
+export async function addCommentToThread({
+  threadId,
   text,
   image,
   userId,
-  path}: CommParam
-) {
+  communityId,
+  path,
+}: CommParam) {
   connectToDB();
+  const communityIdObject = await Community.findOne(
+    { id: communityId },
+    { _id: 1 }
+  );
 
   try {
     // Find the original thread by its ID
     const originalThread = await Thread.findById(threadId);
+
 
     if (!originalThread) {
       throw new Error("Thread not found");
@@ -305,6 +316,7 @@ export async function addCommentToThread(
       text: text,
       author: userId,
       parentId: threadId, // Set the parentId to the original thread's ID
+      community:communityIdObject,
     });
 
     // Save the comment thread to the database

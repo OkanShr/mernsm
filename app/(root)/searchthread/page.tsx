@@ -38,6 +38,7 @@ async function Page({
         ) : (
           <>
             {result.posts.map((post) => (
+              post.community ? "" :
               <ThreadCard
               
                 key={post._id}

@@ -44,7 +44,7 @@ function ThreadCard({
   return (
     <article
       className={`flex w-full flex-col rounded-xl bg-dark-3 ${
-        isComment ? "px-0 xs:px-7" : "bg-dark-2 p-7"
+        isComment ? "px-0 py-4 xs:px-7" : "bg-dark-2 p-7"
       }`}
     >
       <div className="flex items-start justify-between">
@@ -97,9 +97,7 @@ function ThreadCard({
                     height={32}
                     className="cursor-pointer object-contain"
                   />
-                  <p className="text-gray-1">{`${formatDateString(
-                    createdAt
-                  )}`}</p>
+                  
                 </Link>
                 {/* <Image
                   src='/assets/repost.svg'
@@ -158,7 +156,7 @@ function ThreadCard({
         </div>
       )}
 
-      {!isComment && community && (
+      {!isComment && community ? (
         <Link
           href={`/communities/${community.id}`}
           className="mt-5 flex items-center"
@@ -176,7 +174,9 @@ function ThreadCard({
             className="ml-1 rounded-full object-cover"
           />
         </Link>
-      )}
+      ):<p className="text-subtle-medium text-gray-1">
+      {formatDateString(createdAt)}
+    </p>}
     </article>
   );
 }

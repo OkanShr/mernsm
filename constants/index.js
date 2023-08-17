@@ -10,15 +10,15 @@ export const sidebarLinks = [
     label: "Search User",
   },
   {
-    imgURL: "/assets/search.svg",
+    imgURL: "/assets/filesearch.svg",
     route: "/searchthread",
     label: "Search Thread",
   },
-  {
-    imgURL: "/assets/heart.svg",
-    route: "/activity",
-    label: "Activity",
-  },
+  // {
+  //   imgURL: "/assets/heart.svg",
+  //   route: "/activity",
+  //   label: "Activity",
+  // },
   {
     imgURL: "/assets/create.svg",
     route: "/create-thread",
@@ -45,5 +45,5 @@ export const profileTabs = [
 export const communityTabs = [
   { value: "threads", label: "Threads", icon: "/assets/reply.svg" },
   { value: "members", label: "Members", icon: "/assets/members.svg" },
-  { value: "searchpost", label: "Search Post", icon: "/assets/request.svg" },
+  { value: "searchpost", label: "Search Post", icon: "/assets/filesearch-gray.svg" },
 ];

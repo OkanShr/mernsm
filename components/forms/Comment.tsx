@@ -23,6 +23,7 @@ import { addCommentToThread } from "@/lib/actions/thread.actions";
 import { isBase64Image } from "@/lib/utils";
 import { useUploadThing } from "@/lib/uploadthing";
 import { ChangeEvent, useState } from "react";
+import { useOrganization } from "@clerk/nextjs";
 
 interface Props {
   threadId: string;
@@ -30,12 +31,13 @@ interface Props {
   currentUserId: string;
 }
 
+
 function Comment({ threadId, currentUserImg, currentUserId }: Props) {
   const pathname = usePathname();
   const { startUpload } = useUploadThing("media");
 
   const [files, setFiles] = useState<File[]>([]);
-
+  const { organization } = useOrganization();
 
   const form = useForm<z.infer<typeof CommentValidation>>({
     resolver: zodResolver(CommentValidation),
@@ -65,7 +67,9 @@ function Comment({ threadId, currentUserImg, currentUserId }: Props) {
       text: values.thread,
       image: values.threadImage !== "" ? values.threadImage : "",
       userId:JSON.parse(currentUserId),
-      path: pathname,}
+      path: pathname,
+      communityId: organization ? organization.id : null,
+    }
     );
 
     form.reset();
@@ -96,8 +100,8 @@ function Comment({ threadId, currentUserImg, currentUserId }: Props) {
 
   return (
     <Form {...form}>
-      <form className='comment-form flex w-full flex-col rounded-xl bg-dark-3 p-7' onSubmit={form.handleSubmit(onSubmit)}>
-        <FormField
+      <form className='comment-form flex w-full flex-col rounded-xl px-4 bg-dark-3 ' onSubmit={form.handleSubmit(onSubmit)}>
+        <FormField 
           control={form.control}
           name='thread'
           render={({ field }) => (
@@ -116,7 +120,7 @@ function Comment({ threadId, currentUserImg, currentUserId }: Props) {
                   type='text'
                   {...field}
                   placeholder='Comment...'
-                  className='no-focus text-light-1 outline-none'
+                  className='no-focus text-light-1 outline-none bg-dark-2'
                 />
               </FormControl>
               <FormMessage />
@@ -140,7 +144,7 @@ function Comment({ threadId, currentUserImg, currentUserId }: Props) {
                   />
                 ) : (
                   <Image
-                    src='/assets/profile.svg'
+                    src='/assets/create.svg'
                     alt='thread_icon'
                     width={64}
                     height={64}
@@ -161,7 +165,7 @@ function Comment({ threadId, currentUserImg, currentUserId }: Props) {
             </FormItem>
           )}
         />
-        <Button type='submit' className='comment-form_btn'>
+        <Button type='submit' className='comment-form_btn '>
           Reply
         </Button>
       </form>

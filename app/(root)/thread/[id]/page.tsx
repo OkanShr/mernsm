@@ -25,7 +25,7 @@ async function page({ params }: { params: { id: string } }) {
 
   return (
     
-    <section className='relative bg-dark-3 rounded-md'>
+    <section className='relative rounded-md'>
       
       <div>
         <ThreadCard
@@ -39,15 +39,13 @@ async function page({ params }: { params: { id: string } }) {
           createdAt={thread.createdAt}
           comments={thread.children}
         />
-      </div>
-
-      <div className='mt-7'>
         <Comment
           threadId={params.id}
           currentUserImg={user.imageUrl}
           currentUserId={JSON.stringify(userInfo._id)}
         />
       </div>
+
 
       <div className='mt-10'>
         {thread.children.map((childItem: any) => (

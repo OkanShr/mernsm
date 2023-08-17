@@ -8,8 +8,14 @@ import ProfileHeader from "@/components/shared/ProfileHeader";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { fetchCommunityDetails } from "@/lib/actions/community.actions";
+import PostSearch from "@/components/shared/PostSearch";
 
-async function Page({ params }: { params: { id: string } }) {
+async function Page({ params,searchParams 
+}: { 
+  params: { id: string };
+  searchParams: { [key: string]: string | undefined }; 
+}) {
+
   const user = await currentUser();
   if (!user) return null;
 
@@ -78,7 +84,8 @@ async function Page({ params }: { params: { id: string } }) {
             <TabsContent value='searchpost' className='w-full text-light-1'>
               {/* @ts-ignore */}
                   {/* TODO */}
-
+                  <PostSearch searchParams={searchParams} communityId={params.id}                  
+                  />
 
             </TabsContent>
           </Tabs>
