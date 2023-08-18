@@ -70,17 +70,13 @@ function ThreadCard({
             </Link>
 
             <p className="mt-2 text-base-medium text-light-2">{content}</p>
-            {threadImage === "" || threadImage === null ? (
-              ""
-            ) : (
-              <Image
+            {threadImage? <Image
                 src={threadImage}
                 alt="thread_image"
                 width={500}
                 height={500}
-              />
-            )}
-            <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
+              />:""}
+            <div className={`${isComment && "mb-10"}  flex flex-col gap-3`}>
               <div className="flex gap-3.5">
                 {/* <Image
                   src='/assets/heart-gray.svg'
@@ -136,7 +132,7 @@ function ThreadCard({
       </div>
 
       {!isComment && comments?.length > 0 && (
-        <div className="ml-1 mt-3 flex items-center gap-2">
+        <div className="ml-1 mt-3 mb-2 flex items-center gap-2">
           {comments.slice(0, 2).map((comment, index) => (
             <Image
               key={index}

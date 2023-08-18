@@ -40,16 +40,12 @@ async function Page({ params }: { params: { id: string } }) {
                   className="object-contain"
                 />
                 <p className="max-sm:hidden">{tab.label}</p>
-                {tab.label === "Threads" && (
-                  <p className="ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2">
-                    {/* {userInfo.threads.length ? userInfo.threads.length : "?"} */}
-                  </p>
-                )}
+                {tab.label === "Threads" }
               </TabsTrigger>
             ))}
           </TabsList>
-          {profileTabs.map((tab)=>(
-            <TabsContent key={`content-${tab.label}`} value={tab.value} className="w-full text-light-1">
+          
+            <TabsContent key={`content-threads`} value="threads" className="w-full text-light-1">
                 
                 
                 <ThreadsTab
@@ -59,7 +55,8 @@ async function Page({ params }: { params: { id: string } }) {
                 accountType="User"
                 />
             </TabsContent>
-          ))}
+            
+          
         </Tabs>
       </div>
     </section>

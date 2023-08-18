@@ -60,7 +60,7 @@ async function ThreadsTab({
 
   return (
     <section className="mt-9 flex flex-col gap-10">
-      {result.threads.map((thread) =>
+      {result.threads.reverse().map((thread) =>
         page === "profile" ? (
           thread.community === null && (
             <ThreadCard

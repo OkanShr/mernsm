@@ -47,15 +47,17 @@ function PostThread({ userId }: Props) {
     resolver: zodResolver(ThreadValidation),
     defaultValues: {
       thread: "",
-      threadImage: "",
+      threadImage: undefined ,
       accountId: userId,
     },
   });
 
   const onSubmit = async (values: z.infer<typeof ThreadValidation>) => {
+    
+    
     const blob = values.threadImage;
-
-    const hasImageChanged = isBase64Image(blob);
+    
+    const hasImageChanged = isBase64Image(blob?blob:"");
     if (hasImageChanged) {
       const imgRes = await startUpload(files);
 
@@ -65,7 +67,7 @@ function PostThread({ userId }: Props) {
     }
     
       await createThread({
-      image: values.threadImage !== "" ? values.threadImage : "",
+      image: values.threadImage !== "" ? values.threadImage : undefined,
       text: values.thread.toUpperCase(),
       author: userId,
       communityId: organization ? organization.id : null,
@@ -133,6 +135,7 @@ function PostThread({ userId }: Props) {
               </FormLabel>
               <FormControl className='flex-1 text-base-semibold text-gray-200'>
                 <Input required={false}
+                  capture="environment"
                   type='file'
                   accept='image/*'
                   placeholder='Add thread picture'

@@ -8,7 +8,7 @@ function Topbar() {
   return (
     <nav className="topbar">
       <Link href="/" className="flex items-center gap-4">
-        <Image src="/assets/logobf.png" alt="logo" width={48} height={48} />
+        <Image src="/assets/newlogo.png" alt="logo" width={64} height={64} />
         <p className="text-heading3-bold text-light-1 max-xs:hidden">Bonfeuer</p>
       </Link>
 
