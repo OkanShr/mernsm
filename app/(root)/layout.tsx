@@ -10,8 +10,8 @@ import Bottombar from "@/components/shared/Bottombar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata : Metadata = {
-  title: "Bonfeuer",
-  description: "A Next.js 13 Threads Like Application",
+  title: "Jhinspector",
+  description: "A website to save and share pictures",
 };
 
 export default function RootLayout({
