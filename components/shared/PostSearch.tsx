@@ -12,9 +12,11 @@ import ThreadCard from "@/components/cards/ThreadCard";
 async function PostSearch({
   searchParams,
   communityId,
+  communityDetails
 }: {
   searchParams: { [key: string]: string | undefined };
   communityId:string;
+  communityDetails:string
 }) {
   const user = await currentUser();
   if (!user) return null;
@@ -38,8 +40,9 @@ async function PostSearch({
         ) : (
           <>
             {result.posts.map((post) => (
-              post.community ? <ThreadCard
-              
+              post.community && (
+                post.community._id.toString() === communityDetails.toString() && (                
+                <ThreadCard
                 key={post._id}
                 id={post._id}
                 currentUserId={user.id}
@@ -49,9 +52,12 @@ async function PostSearch({
                 community={post.community}
                 createdAt={post.createdAt}
                 comments={post.children} 
-                threadImage={post.image}              /> : ""
+                threadImage={post.image}              
+                />
+                )
               
-            ))}
+              
+            )))}
           </>
         )}
       </div>

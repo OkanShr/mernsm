@@ -28,7 +28,7 @@ async function Page({ params }: { params: { id: string } }) {
         bio={userInfo.bio}
       />
       <div className="mt-9">
-        <Tabs defaultValue="threads" className="w-full">
+        <Tabs defaultValue="posts" className="w-full">
           <TabsList className="tab">
             {profileTabs.map((tab) => (
               <TabsTrigger key={tab.label} value={tab.value}>
@@ -40,12 +40,12 @@ async function Page({ params }: { params: { id: string } }) {
                   className="object-contain"
                 />
                 <p className="max-sm:hidden">{tab.label}</p>
-                {tab.label === "Threads" }
+                {tab.label === "Posts" }
               </TabsTrigger>
             ))}
           </TabsList>
           
-            <TabsContent key={`content-threads`} value="threads" className="w-full text-light-1">
+            <TabsContent key={`content-posts`} value="posts" className="w-full text-light-1">
                 
                 
                 <ThreadsTab
@@ -54,6 +54,19 @@ async function Page({ params }: { params: { id: string } }) {
                 accountId={userInfo.id}
                 accountType="User"
                 />
+            </TabsContent>
+
+            <TabsContent key={`content-replies`} value="replies" className="w-full text-light-1">
+                
+                
+            <h1>Soon...</h1>
+
+            </TabsContent>
+
+            <TabsContent key={`content-tagged`} value="tagged" className="w-full text-light-1">
+                
+                
+                <h1>Soon...</h1>
             </TabsContent>
             
           

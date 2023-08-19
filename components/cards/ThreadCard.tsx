@@ -3,6 +3,8 @@ import Link from "next/link";
 
 import { formatDateString } from "@/lib/utils";
 import DeleteThread from "../forms/DeleteThread";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../ui/alert-dialog";
+import { maxHeaderSize } from "http";
 
 interface Props {
   id: string;
@@ -70,12 +72,29 @@ function ThreadCard({
             </Link>
 
             <p className="mt-2 text-base-medium text-light-2">{content}</p>
-            {threadImage? <Image
+            {threadImage? 
+            <AlertDialog>
+            <AlertDialogTrigger><Image
                 src={threadImage}
                 alt="thread_image"
                 width={500}
                 height={500}
-              />:""}
+              /></AlertDialogTrigger>
+            <AlertDialogContent className="w-full max-w-screen-lg">
+              <AlertDialogHeader>
+              <Image
+                src={threadImage}
+                alt="thread_image"
+                width={maxHeaderSize}
+                height={maxHeaderSize}
+              />
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Close</AlertDialogCancel>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+            :""}
             <div className={`${isComment && "mb-10"}  flex flex-col gap-3`}>
               <div className="flex gap-3.5">
                 {/* <Image
