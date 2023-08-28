@@ -91,6 +91,7 @@ function ThreadCard({
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Close</AlertDialogCancel>
+                <AlertDialogAction>Download</AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>

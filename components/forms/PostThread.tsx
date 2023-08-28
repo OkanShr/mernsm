@@ -135,7 +135,6 @@ function PostThread({ userId }: Props) {
               </FormLabel>
               <FormControl className='flex-1 text-base-semibold text-gray-200'>
                 <Input required={false}
-                  capture="environment"
                   type='file'
                   accept='image/*'
                   placeholder='Add thread picture'
