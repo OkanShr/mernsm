@@ -16,6 +16,12 @@ const userSchema = new mongoose.Schema({
   },
   image: String,
   bio: String,
+  contracts: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Contract",
+    },
+  ],
   threads: [
     {
       type: mongoose.Schema.Types.ObjectId,

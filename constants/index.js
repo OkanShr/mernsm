@@ -14,11 +14,6 @@ export const sidebarLinks = [
     route: "/searchposts",
     label: "Search Posts",
   },
-  // {
-  //   imgURL: "/assets/heart.svg",
-  //   route: "/activity",
-  //   label: "Activity",
-  // },
   {
     imgURL: "/assets/create.svg",
     route: "/create-post",
@@ -35,9 +30,9 @@ export const sidebarLinks = [
     label: "Profile",
   },
   {
-    imgURL: "/assets/user.svg",
-    route: "/about",
-    label: "About",
+    imgURL: "/assets/checklist.svg",
+    route: "/checklist",
+    label: "Checklist",
   },
 ];
 
